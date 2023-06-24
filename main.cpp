@@ -25,7 +25,6 @@ void fizzbuzz_ultra_speed();
 const int numbers = 100;
 const std::string fizz("Fizz");
 const std::string buzz("Buzz");
-const std::string fizzbuzz("FizzBuzz");
 
 int main() {
     std::cout << "=== Classic ===" << std::endl;
@@ -46,14 +45,15 @@ int main() {
 void fizzbuzz_classic() {
     for (auto i = 1; i <= numbers; i++) {
         if (i % 3 == 0 && i % 5 == 0) {
-            std::cout << fizzbuzz << std::endl;
+            std::cout << fizz << buzz;
         } else if (i % 3 == 0) {
-            std::cout << fizz << std::endl;
+            std::cout << fizz;
         } else if (i % 5 == 0) {
-            std::cout << buzz << std::endl;
+            std::cout << buzz;
         } else {
-            std::cout << i << std::endl;
+            std::cout << i;
         }
+        std::cout << std::endl;
     }
 }
 
@@ -67,14 +67,15 @@ void fizzbuzz_opt_speed_wise() {
         auto divisible_by_3 = i % 3 == 0;
         auto divisible_by_5 = i % 5 == 0;
         if (divisible_by_3 && divisible_by_5) {
-            std::cout << fizzbuzz << std::endl;
+            std::cout << fizz << buzz;
         } else if (divisible_by_3) {
-            std::cout << fizz << std::endl;
+            std::cout << fizz;
         } else if (divisible_by_5) {
-            std::cout << buzz << std::endl;
+            std::cout << buzz;
         } else {
-            std::cout << i << std::endl;
+            std::cout << i;
         }
+        std::cout << std::endl;
     }
 }
 
@@ -87,35 +88,26 @@ void fizzbuzz_opt_memory_wise() {
     for (auto i = 1; i <= numbers; i++) {
         // LCM(3,5)=15
         if (i % 15 == 0) {
-            std::cout << fizzbuzz << std::endl;
+            std::cout << fizz << buzz;
         } else if (i % 3 == 0) {
-            std::cout << fizz << std::endl;
+            std::cout << fizz;
         } else if (i % 5 == 0) {
-            std::cout << buzz << std::endl;
+            std::cout << buzz;
         } else {
-            std::cout << i << std::endl;
+            std::cout << i;
         }
+        std::cout << std::endl;
     }
 }
 
 void fizzbuzz_ultra_speed() {
     for (auto i = 1; i <= numbers; i++) {
-        // bit 0 - делимость на 3, bit 1 - делимость на 5
-        uint divisibility = (uint) (i % 3 == 0) | (uint) ((i % 5 == 0) << 1u);
+        // bit 1 - делимость на 3, bit 0 - делимость на 5
+        auto divisibility = ((i % 3 == 0) << 1) | (i % 5 == 0);
 
-        switch (divisibility) {
-            case 3: // 11
-                std::cout << fizzbuzz << std::endl;
-                break;
-            case 2: // 10
-                std::cout << buzz << std::endl;
-                break;
-            case 1: // 01
-                std::cout << fizz << std::endl;
-                break;
-            default:
-                std::cout << i << std::endl;
-                break;
-        }
+        if (divisibility & 2) std::cout << fizz;
+        if (divisibility & 1) std::cout << buzz;
+        if (!divisibility) std::cout << i;
+        std::cout << std::endl;
     }
 }
